@@ -9,9 +9,9 @@ This code was added to the System Service to start on boot as follows:
          After=multi-user.target
 
          [Service]  
-         ExecStart=/usr/bin/python3 /home/usr/path/timer_lookaway.py
-         WorkingDirectory=/home/usr/path/timer_lookaway.py
-         Environment=PULSE_SERVER=unix: pulse/server/address
+         ExecStart=/usr/bin/python3 /home/usr/path/timer_lookaway.py  
+         WorkingDirectory=/home/usr/path/timer_lookaway.py  
+         Environment=PULSE_SERVER=unix: pulse/server/address  
   
          [Install]  
          WantedBy=multi-user.target
