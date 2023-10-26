@@ -5,13 +5,16 @@ This code was added to the System Service to start on boot as follows:
    2. In the service file, included some information about the service:  
      
         [Unit]
-        Description= Timer to remind me to look away every "n" minutes using a Python Script.
+         Description= Timer to remind me to look away every "n" minutes using a Python Script.
+         After=multi-user.target
 
-        [Service]
-        ExecStart=/usr/bin/python3 /home/joxulds/CS50/Timer-LookAway/timer_lookaway.py
-        WorkingDirectory=/home/joxulds/CS50/Timer-LookAway/
-        [Install]
-        WantedBy=multi-user.target
+         [Service]
+         ExecStart=/usr/bin/python3 /home/joxulds/CS50/Timer-LookAway/timer_lookaway.py
+         WorkingDirectory=/home/joxulds/CS50/Timer-LookAway/
+         Environment=PULSE_SERVER=unix:/mnt/wslg/PulseServer
+
+         [Install]
+         WantedBy=multi-user.target
 
    3. Save and close the file.
 
