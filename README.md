@@ -2,7 +2,8 @@
 
 This code was added to the System Service to start on boot as follows:                                         
    1. Create a new service file in /etc/systemd/system, as /etc/systemd/system/timer_lookaway.service.
-   2. In the service file, included some information about the service: \n
+   2. In the service file, included some information about the service:
+  
         [Unit]
         Description= Timer to remind me to look away every "n" minutes using a Python Script.
 
