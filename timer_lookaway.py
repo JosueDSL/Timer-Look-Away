@@ -1,9 +1,9 @@
-import pygame
 import time
+import simpleaudio as sa
 
-pygame.mixer.init()
-pygame.mixer.music.load("look_away.mp3")
-    
+wave_obj = sa.WaveObject.from_wave_file("look_away.wav")
+
 while True:
-    pygame.mixer.music.play()
-    time.sleep(600)
+    play_obj = wave_obj.play()
+    play_obj.wait_done()
+    time.sleep(600) 
