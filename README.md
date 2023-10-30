@@ -3,19 +3,19 @@
 This code was added to the System Service to start on boot as follows:                                         
    1. Create a new service file in /etc/systemd/system, as /etc/systemd/system/timer_lookaway.service.
    2. In the service file, included some information about the service:  
-     
-         [Unit]
-         Description= Timer to remind me to look away every "n" minutes using a Python Script.
-         After=multi-user.target
-
-         [Service]
-         ExecStart=/usr/bin/python3 /home/joxulds/CS50/Timer-LookAway/timer_lookaway.py
-         WorkingDirectory=/home/joxulds/CS50/Timer-LookAway/
-         Environment=PULSE_SERVER=unix:/mnt/wslg/PulseServer
-
-         [Install]
-         WantedBy=multi-user.target
-
+      
+      [Unit]
+      Description= Timer to remind me to look away every "n" minutes using a Python Script.  
+      After=multi-user.target  
+  
+      [Service]  
+      ExecStart=/usr/bin/python3 /home/joxulds/Enviroment-Setup/Personalization/Timer-LookAway/timer_lookaway.py  
+      WorkingDirectory=/home/joxulds/Enviroment-Setup/Personalization/Timer-LookAway  
+      Environment=PULSE_SERVER=unix:/mnt/wslg/PulseServer  
+  
+      [Install]
+      WantedBy=multi-user.target  
+  
    3. Save and close the file.
 
    4. Enable the service with the command sudo systemctl enable timer_lookaway.service. This will make the service start on boot.
