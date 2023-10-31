@@ -1,1 +1,6 @@
 Memory usage: 29.9%
+Memory usage: 599.63 MB
+Memory usage: 604.71 MB
+Memory usage: 604.05 MB
+Memory usage: 614.61 MB
+Memory usage: 12.26 MB

@@ -20,8 +20,12 @@ while True:
     time_difference = current_time - look_away_last_played
     
     if time_difference >= look_away_interval:
+        import os
+        import psutil
+
         with open("/home/joxulds/Enviroment-Setup/Personalization/Timer-Look-Away/memory_usage.txt", "a") as f:
-            f.write(f"Memory usage: {psutil.virtual_memory().used/1024/1024:.2f} MB\n")
+            memory_usage = psutil.Process(os.getpid()).memory_info().rss / (1024 * 1024) # convert to MB
+            f.write(f"Memory usage: {memory_usage:.2f} MB\n")
         look_away_last_played = current_time
         play_obj = wave_obj.play()
         play_obj.wait_done()
