@@ -1,10 +1,7 @@
 import time
 import simpleaudio as sa
 import psutil
-
-import time
-import simpleaudio as sa
-import psutil
+import os
 
 wave_obj = sa.WaveObject.from_wave_file("look_away.wav")
 wave_obj2 = sa.WaveObject.from_wave_file("take-a-break.wav")
@@ -20,9 +17,6 @@ while True:
     time_difference = current_time - look_away_last_played
     
     if time_difference >= look_away_interval:
-        import os
-        import psutil
-
         with open("/home/joxulds/Enviroment-Setup/Personalization/Timer-Look-Away/memory_usage.txt", "a") as f:
             memory_usage = psutil.Process(os.getpid()).memory_info().rss / (1024 * 1024) # convert to MB
             f.write(f"Memory usage: {memory_usage:.2f} MB\n")
