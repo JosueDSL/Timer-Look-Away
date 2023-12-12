@@ -1,0 +1,64 @@
+/* Tags */
+body {
+    font-size: clamp(1.5rem, 2vw, 2rem);
+}
+
+ /* Classes */
+ .blue {
+    color: rgb(66, 66, 202);
+ }
+ 
+ .navbar {
+    background-color: #061126 !important;
+ }
+ 
+ :root {
+    --nav-font-size: 1rem; 
+}
+
+.navbar .nav-link {
+    font-size: var(--nav-font-size);
+}
+
+.brand-logo {
+    font-size: var(--nav-font-size);
+}
+
+ .navbar .navbar-brand,
+ .navbar .nav-link {
+    color: #ffffff !important;
+ }
+ 
+ .viewport {
+    font-size: clamp(1rem, 2vw, 1.5rem);
+ }
+ /* IDs */
+ .navbar-toggler-icon {
+    background-color:  rgb(27, 27, 126);
+ }
+
+ #index-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+    height: auto; 
+    margin-top: 3vw;
+}
+
+ #timerApp-index {
+
+
+    h1 {
+         text-align: center;
+         margin-top: 20px;
+         margin-bottom: 20px;
+     }
+    
+    p {
+        margin-left: 30px;
+    }
+    background-color: #102A3B;
+    color: #ffffff;
+}
+ 
