@@ -6,7 +6,11 @@ app_name = "timerApp"
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("trial/", views.trial, name="trial"),
-    path("register/", views.register, name="register"),
-    path("login/", views.login, name="login"),
+    path("home", views.home, name="home"),
+    path("trial", views.trial, name="trial"),
+    path("signup", views.signup, name="signup"),
+    path("timers", views.timers, name="timers"),
+    path("speech", views.speech, name="speech"),
+    path("login", views.login_view, name="login"),
+    path("logout", views.logout_view, name="logout")
 ]

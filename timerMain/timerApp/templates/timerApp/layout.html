@@ -6,32 +6,53 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>TimerLA! {% block title %} {% endblock %} </title>
+        <title>TLA Timer: {% block title %} {% endblock %} </title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <link href="{% static 'timerApp/styles.css' %}" rel="stylesheet" >
     </head>
 
-    <body {% block bodytag %} {% endblock %}>
+    <body>
+        {% if user.is_authenticated %}
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="{% url 'timerApp:home' %}"><span class="titlenav">Timer Look</span> <span class="blue">Away!</span></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div class="navbar-nav me-auto">
+                            <a class="nav-link active" href="{% url 'timerApp:home' %}">Home</a>
+                            <a class="nav-link" href="{% url 'timerApp:trial' %}">Try it!</a>
+                        </div>
+                        <div class="navbar-nav">
+                            <a class="nav-link " href="{% url 'timerApp:signup' %}"><button type="button" class="btn btn-outline-warning">Sign Up</button></a>
+                            <a class="nav-link " href="{% url 'timerApp:login' %}"><button type="button" class="btn btn-outline-light">Log In</button></a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
         
+        {% else %}
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                     <div class="container-fluid">
-                        <a class="navbar-brand" href="{% url 'timerApp:index' %}"><span>Timer Look</span> <span class="blue">Away!</span></a>
+                        <a class="navbar-brand" href="{% url 'timerApp:home' %}"><span class="titlenav">Timer Look</span> <span class="blue">Away!</span></a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                             <div class="navbar-nav me-auto">
-                                <a class="nav-link active" href="{% url 'timerApp:index' %}">Home</a>
+                                <a class="nav-link active" href="{% url 'timerApp:home' %}">Home</a>
                                 <a class="nav-link" href="{% url 'timerApp:trial' %}">Try it!</a>
                             </div>
                             <div class="navbar-nav">
-                                <a class="nav-link " href="{% url 'timerApp:register' %}">Register</a>
-                                <a class="nav-link " href="{% url 'timerApp:login' %}">Log In</a>
+                                <a class="nav-link " href="{% url 'timerApp:signup' %}"><button type="button" class="btn btn-outline-warning">Sign Up</button></a>
+                                <a class="nav-link " href="{% url 'timerApp:login' %}"><button type="button" class="btn btn-outline-light">Log In</button></a>
                             </div>
                         </div>
                     </div>
                 </nav>
-
+        {% endif %}
         <main>
             {% block main %} {% endblock %}
         </main>

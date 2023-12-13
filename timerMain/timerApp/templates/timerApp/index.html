@@ -2,18 +2,11 @@
 {% load static %}
 {% block title %} Welcome! {% endblock %}
 
-{% block bodytag %} id="timerApp-index" {% endblock %}
-
 {% block main %}
-  
-    <h1 >Timer Look Away!</h1>
-    <br style="">
-    <div>
-        <p>Is a simple timer that will alert you when it's time to look away from your computer screen.</p>
-        <p>It's based on the 20-20-20 rule, which states that every 20 minutes, you should look at something 20 feet away for 20 seconds.</p>
-        <p>TimerLookAway! will alert you every 20 minutes with a sound and a popup message.</p>    
+
+    <div id="timerApp-index" >
+        <h1 >Welcome Index!</h1>
+        
     </div>
-      <div class="mx-auto" id="index-image">
-        <img src="{% static 'timerApp/background.jpg'%}" class="img-fluid rounded mx-auto d-block"   alt="Timer look away main image">
-    </div>
+
 {% endblock %}

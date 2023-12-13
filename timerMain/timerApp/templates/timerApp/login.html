@@ -1,11 +1,36 @@
 {% extends "timerApp/layout.html" %}
 
-{% block title %} Welcome! {% endblock %}
-
-{% block bodytag %} id="timerApp-index" {% endblock %}
+{% block title %} Log In {% endblock %}
 
 {% block main %}
 
-    <h1 >Log in!</h1>
+    {% if message %}
+        <div class="alert alert-warning " style="text-align: center; padding-top: 0.6vw; padding-bottom: 0.6vw;" role="alert">
+            {{ message }}
+        </div>
+    {% endif %}
 
+    <h3 style="text-align: center; margin-top: 2vw;"> Welcome to TLA Timer! </h3>
+    <h4 style="text-align: center;"> Seize your day!  <span style="font-size: 0.8em; padding-left: 10px;">  Make the most of your time </span></h4>
+    
+    <form action="{% url 'timerApp:login' %}" method="post">
+        {% csrf_token %}
+        <div class="mb-3 mt-4">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
+        </div>
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password">
+        </div>
+        <div class="text-center">
+            <button class="mb-1 mt-2 btn btn-light" type="submit"> Log In </button>
+        </div>
+    </form>
+    <br>
+    <h5 class="d-flex justify-content-center"> Don't have an account? </h5>
+    <div class="d-flex justify-content-center">
+        <a class="nav-link" href="{% url 'timerApp:signup' %}">
+            <button type="button" class="btn btn-outline-warning"> Sign Up </button>
+        </a>
+    </div>
+    
 {% endblock %}
