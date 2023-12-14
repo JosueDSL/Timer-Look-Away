@@ -12,5 +12,6 @@ urlpatterns = [
     path("timers", views.timers, name="timers"),
     path("speech", views.speech, name="speech"),
     path("login", views.login_view, name="login"),
-    path("logout", views.logout_view, name="logout")
+    path("logout", views.logout_view, name="logout"),
+    path("password", views.password, name="password")
 ]

@@ -4,8 +4,10 @@ from django.contrib.auth.models import User
 from django.core.validators import MinLengthValidator, EmailValidator
 
 class RegisterForm(UserCreationForm):
-    email = forms.EmailField(validators=[EmailValidator()])
-    password1 = forms.CharField(validators=[MinLengthValidator(8)])
+    username = forms.CharField(validators=[MinLengthValidator(5)], error_messages={'required': 'Please enter a username.'})
+    email = forms.EmailField(validators=[EmailValidator()], error_messages={'required': 'Please enter an email address.'})
+    password1 = forms.CharField(validators=[MinLengthValidator(8)], error_messages={'required': 'Please enter a password.'})
+    password2 = forms.CharField(validators=[MinLengthValidator(8)], error_messages={'required': 'Please confirm your password.'})
 
     class Meta:
         model = User

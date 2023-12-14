@@ -1,35 +1,59 @@
+
 {% extends "timerApp/layout.html" %}
 
 {% block title %} Sign up! {% endblock %}
 
 {% block main %}
-    <h2 style="text-align: center; margin-top: 2vw;"> Make the most of your time! </h2>
-    <h4 style="text-align: center;"> Sign up!    <span style="font-size: 0.8em; padding-left: 10px;">  It's quick and easy </span></h4>
-    
-    <form action="{url 'timerApp:signup' %}"  method="post">
-        {% csrf_token %}
-        <div class="mb-2 mt-4 ">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" minlength="5" placeholder="Username" type="text">
+
+    {% if message %}
+    <!-- # width="2vw" height="auto" #  d-flex justify-content-between mx-3 -->
+    <div class="alert alert-primary d-flex align-items-center p-1 justify-content-center" role="alert">
+        <svg xmlns="http://www.w3.org/2000/svg"width="2vw" height="auto" fill="currentColor" class="bi bi-x-circle d-flex justify-content-between mx-3" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+        </svg>
+        <div >
+        {{ message }}
         </div>
-        <div class="mb-2">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="email" name="email" placeholder="Email" type="email">
-        </div>
-        <div class="mb-2">
-            <input class="form-control mx-auto w-auto" id="password" name="password" minlength="6" placeholder="Password" type="password">
-        </div>
-        <div>
-            <input class="form-control mx-auto mb-3 w-auto" id="password" name="confirmation" minlength="6" placeholder="Confirm password" type="password">
-        </div>
-        <div class="text-center mt-5">
-            <button class="mb-1  btn btn-warning" type="submit">Sign up</button>
-        </div>
-    </form>
-    <br>
-    <h5 class="d-flex justify-content-center"> Already have an account?</h5>
-    <div class="d-flex justify-content-center">
-        <a class="nav-link" href="{% url 'timerApp:login' %}">
-            <button type="button" class="btn btn-outline-light">Log In</button>
-        </a>
     </div>
+    {% endif %}
+    <div class="container d-flex flex-column align-items-center justify-content-center">
+
+        <div class="d-flex flex-column align-items-center justify-content-center mt-3 text-light">
+            <h2 class="p-2"> Welcome to TLA Timer! </h2>
+            <h3> Seize your day!  <span class="fs-4">  Make the most of your time </span></h3>
+        </div>
+        
+        <form action="{% url 'timerApp:signup' %}"  method="post">
+            {% csrf_token %}
+            <div class="mb-2 mt-4 ">
+                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" minlength="5" placeholder="Username" type="text">
+            </div>
+            <div class="mb-2">
+                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="email" name="email" placeholder="Email" type="email">
+            </div>
+            <div class="mb-2">
+                <input class="form-control mx-auto w-auto" id="password" name="password" minlength="6" placeholder="Password" type="password">
+            </div>
+            <div>
+                <input class="form-control mx-auto mb-3 w-auto" id="confirmation" name="confirmation" minlength="6" placeholder="Confirm password" type="password">
+            </div>
+            <div class="text-center mt-5">
+                <button class="mb-4  btn btn-warning" type="submit">Sign up</button>
+            </div>
+        </form>
+
+        <div class="d-flex flex-column justify-content-center mt-4 text-light"></div>
+
+            <h5 class="text-light mb-4"> Already have an account?</h5>
+            <a class="nav-link" href="{% url 'timerApp:login' %}">
+                <button type="button" class="btn btn-outline-light">Log In</button>
+            </a>
+            
+        </div>
+
+
+    </div>
+    
     
 {% endblock %}

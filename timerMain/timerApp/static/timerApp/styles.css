@@ -1,91 +1,68 @@
 
 /* Tags */
 body {
-    font-size: clamp(1.5vw, 2vw, 2vw);
-    position: relative;
-    background-color: #102A3B;
-    color: #ffffff; 
+    background-color: #102A3B; /* #102A3B; #142E63; */
 }
 
+/* #9DCDDC #6FC2E3*/
 body::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
     background-image: url("../timerApp/background_opacity.png"); 
     background-repeat: no-repeat;
     background-size: cover;
-    opacity: 0.05; 
+    opacity: 0.06; 
     z-index: -1;
 }
 
 
-html, body {
-    height: 100%;
-}
-
  /* Classes */
- .blue {
-    color: rgb(66, 66, 202);
- }
- 
- .navbar {
-    background-color: #061126 !important;
- }
- 
- :root {
-    --nav-font-size: 1.8vw; 
-}
 
- .navbar-brand {
-    font-size: var(--nav-font-size) !important;
-}
+
+ .blue {
+    color: #7DDAFF;
+ }
+ 
+ .text-bg-dark {
+    color: #fff !important;
+    background-color: #061126 !important;
+  }
+ 
 
 .brand-logo {
     font-size: var(--nav-font-size);
 }
 
-.nav-link {
-    font-size: 1.4vw !important;
-    padding: 0.5vw 1vw !important;
-}
- .navbar .navbar-brand,
- .navbar .nav-link {
-    color: #ffffff !important;
- }
  
  .viewport {
     font-size: clamp(1vw, 2vw, 1.5vw);
  }
-
- .navbar-toggler-icon {
-    background-color:  rgb(27, 27, 126);
- }
-
 
  .inline-content {
     display: flex;
     align-items: center;
 }
 
+
  /* IDs */
 
 /* Media */
 @media (max-width: 600px) {
-    .navbar-brand {
-        font-size: 7vw !important;
+ 
+    .ms-5 {
+        margin-left: 0 !important;
     }
-    
-    .nav-link {
-        font-size: 6vw !important;
-      }
 
-    body {
-        font-size: clamp(.8rem, 1.3rem, 2rem);
+   body {
+        text-align: center;
     }
     
+    svg {
+        width: 5vw;
+    }
+
     #timerApp-index p {
         margin-left: 2vw;
         margin-right: 10vw;

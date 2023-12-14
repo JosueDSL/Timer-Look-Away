@@ -1,12 +1,40 @@
 {% extends "timerApp/layout.html" %}
-{% load static %}
+
 {% block title %} Welcome! {% endblock %}
 
 {% block main %}
-
-    <div id="timerApp-index" >
-        <h1 >Welcome Index!</h1>
-        
+ 
+    {% if message %}
+    <!-- # width="2vw" height="auto" #  d-flex justify-content-between mx-3 -->
+    <div class="alert alert-primary d-flex align-items-center p-1 justify-content-center" role="alert">
+        <svg xmlns="http://www.w3.org/2000/svg"  width="2vw" height="auto" fill="currentColor" class="bi bi-box-arrow-right d-flex justify-content-between mx-3" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
+            <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+        </svg>
+        <div >
+        {{ message }}
+        </div>
     </div>
+    {% endif %}
+    <div class="container">
 
+        <div class="d-flex flex-column align-items-center justify-content-center text-light">
+
+            <h1 class="p-4">Timer Look Away!</h1>
+            <div class="d-flex d-flex flex-column align-items-start justify-content-center text-light p-4 fs-4">
+                <p>A simple timer that will alert you when it's time to look away from your screen</p>
+                <p>Timer Look Away will allow you to set custoam audio notifications </p>
+                <p>Set timers with personalized audio reminders that will be saved to your account</p>
+            </div>
+            <div class="d-flex justify-content-center">
+                <a class="nav-link " href="{% url 'timerApp:signup' %}">
+                    <button type="button" class="btn btn-outline-info btn-lg btn-block" 
+                    style="--bs-btn-padding-y: .7vw; --bs-btn-padding-x: 15vw; --bs-btn-font-size: 2vw 
+                    @media (max-width: 600px): {--bs-btn-padding-y: 1.5vw; --bs-btn-padding-x: 25vw; --bs-btn-font-size: 3vw }"> Sign Up Now!</button>
+                    
+                </a>  
+            </div>
+        </div>
+    
+    </div>
 {% endblock %}
