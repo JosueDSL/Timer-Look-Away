@@ -52,7 +52,7 @@ def signup(request):
         # Create new user
         user = User.objects.create_user(username, email, password)
         login(request, user)
-        return HttpResponseRedirect(reverse("timerApp:index"))
+        return render(request, "timerApp/home.html", {"message": f"Thanks for joining {username.capitalize()}!, I hope you enjoy the app!"})
         
     else:
         return render(request, "timerApp/signup.html")
@@ -100,11 +100,11 @@ def home(request):
 
 @login_required(login_url='timerApp:login')   
 def timers(request):
-    pass
+    return render(request, 'timerApp/timers.html')
 
 @login_required(login_url='timerApp:login')
 def speech(request):
-    pass
+    return render(request, 'timerApp/speech.html')
 
 
 
