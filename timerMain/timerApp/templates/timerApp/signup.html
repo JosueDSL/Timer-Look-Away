@@ -20,14 +20,14 @@
     <div class="container d-flex flex-column align-items-center justify-content-center">
 
         <div class="d-flex flex-column align-items-center justify-content-center mt-3 text-light">
-            <h2 class="p-2"> Welcome to TLA Timer! </h2>
-            <h3> Seize your day!  <span class="fs-4">  Make the most of your time </span></h3>
+            <h2 class="p-2"> Sign up to TLA Timer! </h2>
+            <h4> It's quick and easy</h4>
         </div>
         
         <form action="{% url 'timerApp:signup' %}"  method="post">
             {% csrf_token %}
             <div class="mb-2 mt-4 ">
-                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" minlength="5" placeholder="Username" type="text">
+                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" minlength="5" maxlength="64" placeholder="Username" type="text">
             </div>
             <div class="mb-2">
                 <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="email" name="email" placeholder="Email" type="email">
