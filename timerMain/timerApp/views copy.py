@@ -85,28 +85,7 @@ def logout_view(request):
 
 @login_required(login_url='timerApp:login')
 def home(request):
-    if request.method == "POST":
-        # Get form information
-
-        return render(request, 'timerApp/home.html', {"message": "POST request received"})
-
-    else:
-        # Get user information
-        user = request.user
-
-        # Get all timers associated with the user
-        timers = user.timers.all()
-
-        # Get all the timers names
-        if timers:
-            timer_names = [timer.name for timer in timers]
-        else:
-            ... # If user has no timers, display message or render a different html exeception 
-            
-
-
-        # If user has no timers, display message
-        return render(request, 'timerApp/home.html')
+    return render(request, 'timerApp/home.html')
 
 
 @login_required(login_url='timerApp:login')   
