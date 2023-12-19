@@ -1,5 +1,5 @@
 {% extends "timerApp/layout.html" %}
-
+{% load static %}
 {% block title %} Home! {% endblock %}
 
 {% block main %}
@@ -13,24 +13,58 @@
             <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.707l.547.547 1.17-1.951a.5.5 0 1 1 .858.514Z"/>
         </svg>
         {{ message }}
-        </div>
     </div>
+
     {% endif %}
 
-    <div class="container d-flex flex-column" >
-    
-        <div class="d-flex flex-column justify-content-center align-items-center mt-3">
-            <h1 class="text-light"> Play your timers! </h1>
+
+    <div class="container d-flex flex-column">
+        <div class="d-flex flex-column justify-content-center align-items-center mt-3 flex-grow-1" style="background-color: #77B1C0; border-radius: .5vw;">
+            <h1 class="text-dark"> Play your timers! </h1>
             <h3 class="text-secondary"> Home page</h3>
         </div>
-        <div class="d-flex flex-column justify-content-start align-items-center mt-2 p-3">
-            
-            <h1 class="text-light" id="countdown"></h1>
-            
-            
-        </div>
         
-    
-    </div>
+        <div class="d-flex flex-column justify-content-evenly mt-2 p-3" style="background-color: #638598; border-radius: .5vw;"> 
+            {% for timer in timers %}
+            
+            <div class="d-flex justify-content-center align-items-center mx-3 mb-3 " style="background-color: #A7D8E2; border-radius: .5vw;">
+                <h1 class="text-dark" id="countdown{{ timer.id }}"> {{ timer.name }} </h1>
+            </div>
+            <div class="d-flex flex-row justify-content-center align-items-center mx-3 mb-3"  style="background-color: #1D4461; border-radius: .5vw;">
+                    
+                <div class="d-flex flex-row justify-content-center my-2">
+                    <input type="submit" class="btn btn-light" id="startButton{{ timer.id }}" value="Start">
+                    <input type="submit" class="btn btn-secondary ms-1" id="stopButton{{ timer.id }}" value="Stop">
+                    <input type="submit" class="btn btn-warning ms-1" id="pauseButton{{ timer.id }}" value="Pause">
+                    <input type="submit" class="btn btn-info me-5 ms-1" id="resumeButton{{ timer.id }}" value="Resume">
+                    <form action="{% url 'timerApp:delete_timer' timer.id %}" method="post">
+                        {% csrf_token %}
+                        <input type="submit" class="btn btn-danger" value="Delete">
+                    </form>
+                </div>
+            </div>
+        
+            {% empty %}
+            <div class="container d-flex flex-column">
+                <div class="d-flex justify-content-center align-items-center mx-3 mb-3 " style="background-color: #A7D8E2; border-radius: .5vw;">
+                    <h1 class="text-dark" id="countdown"> No timers yet! </h1>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <a class="nav-link " href="{% url 'timerApp:timers' %}">
+                        <button type="button" class="btn btn-info btn-lg btn-block"
+                            style="--bs-btn-padding-y: .7vw; --bs-btn-padding-x: 15vw; --bs-btn-font-size: 2vw 
+                                    @media (max-width: 600px): {--bs-btn-padding-y: 1.5vw; --bs-btn-padding-x: 25vw; --bs-btn-font-size: 3vw }"> Set Up Timers!</button>
+                
+                    </a>
+                </div>
 
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'timerApp/timercountdown.js' %}"></script>
 {% endblock %}

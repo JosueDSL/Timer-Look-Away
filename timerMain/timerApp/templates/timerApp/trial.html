@@ -1,9 +1,39 @@
 {% extends "timerApp/layout.html" %}
-
+{% load static %}
 {% block title %} Try TLA Timer ! {% endblock %}
 
 {% block main %}
 
-    <h1 >Trial!</h1>
+    <div class="container d-flex flex-column">
+        <div class="d-flex flex-column justify-content-center align-items-center my-3 flex-grow-1"
+            style="background-color: #77B1C0; border-radius: .5vw;">
+            <h1 class="text-dark"> Try Timer Look Away! </h1>
+            <h3 class="text-secondary"> Trial page </h3>
+        </div>
+    
+        <div class="d-flex flex-column justify-content-evenly mt-2 p-3"
+            style="background-color: #638598; border-radius: .5vw;">
+            <div class="d-flex justify-content-center align-items-center mx-3 mb-3 "
+                style="background-color: #A7D8E2; border-radius: .5vw;">
+                <h1 class="text-dark" id="countdown"> TIMER TEST: WELCOME! </h1>
+            </div>
+
+            <div class="d-flex flex-row justify-content-center align-items-center mx-3 mb-3"
+                style="background-color: #1D4461; border-radius: .5vw;">
+                <div class="d-flex flex-row justify-content-center my-2">
+                    <input type="submit" class="btn btn-light" id="startButton" value="Start">
+                    <input type="submit" class="btn btn-secondary ms-1" id="stopButton" value="Stop">
+                    <input type="submit" class="btn btn-warning ms-1" id="pauseButton" value="Pause">
+                    <input type="submit" class="btn btn-info me-5 ms-1" id="resumeButton" value="Resume">
+                    <input type="submit" onclick="alert('Once you sign up you will be able to delete your own timers!')" class="btn btn-danger" value="Delete">
+                </div>
+            </div>
+            
+        </div>
+    </div>
   
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'timerApp/trialtimer.js' %}"></script>
 {% endblock %}

@@ -1,21 +1,24 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
 from django.shortcuts import render
-from django.urls import reverse
+from django.core import serializers
+from django.http import JsonResponse
+import json
 
+# Fuctions.py was created to keep views.py clean and readable and improve modularity. 
 from .functions import signup_validation, timer_validation
+
 from .models import Timer
 
 # Create your views here.
+
 def index(request):
     return render(request, 'timerApp/index.html')
 
-
 def trial(request):
     return render(request, 'timerApp/trial.html')
-
 
 def signup(request):
 
@@ -37,7 +40,8 @@ def signup(request):
             # Add demo timer and intro message
             add_demo = Timer.objects.create(user=user, name=output[1], interval=1, message=output[2])
             login(request, user)
-            return render(request, "timerApp/home.html", {"message": f"Thanks for joining {username.capitalize()}!, I hope you enjoy the app!"})
+            request.session['message'] = f"Thanks for joining {username.capitalize()}! I hope you enjoy the app!"
+            return redirect('timerApp:home')
         
         elif output[0] == False:
             # The function returned a message
@@ -66,7 +70,8 @@ def login_view(request):
         if user is not None:
             # Login user
             login(request, user)
-            return render(request, "timerApp/home.html", {"message": f"Welcome, {username.capitalize()}!!"})
+            request.session['message'] = f"Welcome, {username.capitalize()}!!"
+            return redirect('timerApp:home')
 
         else:
             return render(request, 'timerApp/login.html', {
@@ -76,15 +81,27 @@ def login_view(request):
     # If user is not logged in, redirect to login page
     return render(request, 'timerApp/login.html')
 
+
 def logout_view(request):
     logout(request)
     return render(request, 'timerApp/index.html', {
         "message": "Logged out."
     })
 
+# Create a view to serialize timers to json and call it from javascript as an API
+@login_required(login_url='timerApp:login')
+def get_timersjson(request):
+    # Get user information
+    user = request.user
+    # Get all timers associated with the user
+    timers = user.timers.all()
+    timer_json = serializers.serialize('json', timers)
+    return JsonResponse(json.loads(timer_json), safe=False)
+
 
 @login_required(login_url='timerApp:login')
 def home(request):
+    
     if request.method == "POST":
         # Get form information
 
@@ -96,17 +113,14 @@ def home(request):
 
         # Get all timers associated with the user
         timers = user.timers.all()
-
-        # Get all the timers names
-        if timers:
-            timer_names = [timer.name for timer in timers]
-        else:
-            ... # If user has no timers, display message or render a different html exeception 
-            
-
-
-        # If user has no timers, display message
-        return render(request, 'timerApp/home.html')
+        # Check if there is a message in the session
+        message = request.session.get('message', '')
+        
+        if 'message' in request.session:
+            del request.session['message']
+            return render(request, 'timerApp/home.html', {"message": message, "timers": timers })
+        
+        return render(request, 'timerApp/home.html', {"timers": timers})
 
 
 @login_required(login_url='timerApp:login')   
@@ -131,18 +145,29 @@ def timers(request):
         if output == True:
             # Create new timer
             set_timer = Timer.objects.create(user=user, name=name, interval=int(minutes) + int(hours) * 60, message=message)
-            return render(request, 'timerApp/home.html', {"message": f"Timer {name} created!"})
+            request.session['message'] = f"Timer {name} successfully created!"
+            return redirect('timerApp:home')
+        
         elif output[0] == False:
             # Function returned an error message
             return render(request, "timerApp/timers.html", {"message": output[1]})    
 
     return render(request, 'timerApp/timers.html')
 
-@login_required(login_url='timerApp:login')
-def speech(request):
-    return render(request, 'timerApp/speech.html')
-
-
+def delete_timer(request, timer_id):
+    if request.method == "POST":
+        # Make sure the timer id belongs to the user
+        user = request.user
+        timer = Timer.objects.get(id=timer_id)
+        
+        if timer.user != user:
+            request.session['message'] = "You can't delete that timer."
+            return redirect('timerApp:home')
+        
+        # Delete timer
+        user.timers.filter(id=timer_id).delete()
+        request.session['message'] = "Timer successfully deleted."
+        return redirect('timerApp:home')
 
 # Change password
 @login_required(login_url='timerApp:login')
@@ -155,7 +180,7 @@ def password(request):
         confirmation = request.POST["confirmation"]
 
         # Check if any fields are empty
-        if not request.POST["old_password"] or not request.POST["new_password"] or not request.POST["confirmation"]:
+        if not old_password or not new_password or not confirmation:
             return render(request, "timerApp/password.html", {"message": "All fields must be filled out."})
 
         # Ensure old password is correct
@@ -165,18 +190,25 @@ def password(request):
             return render(request, "timerApp/password.html", {"message": "Incorrect password."})
 
         # Check if passowords match
-        elif request.POST["new_password"] != request.POST["confirmation"]:
+        elif new_password != confirmation:
             return render(request, "timerApp/password.html", {"message": "Passwords don't match."})
 
         # make sure password is at least 6 characters
-        elif len(request.POST["new_password"]) < 6:
+        elif len(new_password) < 6:
             return render(request, "timerApp/password.html", {"message": "Password must be at least 6 characters."})
          
         # Change password
         user = User.objects.get(username=request.user.username)
-        user.set_password(request.POST["new_password"])
+        user.set_password(new_password)
         user.save()
-        return render(request, "timerApp/home.html", {"message": "Password successfully updated!"})
+        
+        # Authenticate user to redirect to home page
+        user_authentication = authenticate(request, username = user, password = new_password)
+        if user_authentication is not None:
+            # Login user
+            login(request, user_authentication)
+            request.session['message'] = "Password successfully updated!"
+            return redirect('timerApp:home')
 
     else:
         return render(request, "timerApp/password.html")

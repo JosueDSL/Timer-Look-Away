@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.contrib.auth.models import User
 
 
@@ -33,7 +32,7 @@ def signup_validation(username, email, password, confirmation):
         if len(intro_message) > 128:
             intro_message = f"Hello {username}! Welcome to Timer Look Away! Make the most of your time!"
         
-        intro_name = f"Demo Timer; Welcome {username} to TLA!"
+        intro_name = f"Welcome {username} to TLA!"
         if len(intro_name) > 64:
             intro_name = f"Demo Timer, Welcome to TLA!"
 

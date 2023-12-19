@@ -7,7 +7,6 @@ body {
 /* #9DCDDC #6FC2E3*/
 body::before {
     content: "";
-    position: absolute;
     width: 100%;
     height: 100%;
     background-image: url("../timerApp/background_opacity.png"); 
@@ -20,6 +19,19 @@ body::before {
 
  /* Classes */
 
+
+ 
+.responsive-flex-item {
+    flex-basis: 20vw;
+    flex-grow: 1;
+    flex-shrink: 0;
+    max-width: 20vw;
+    overflow: auto;
+}
+
+.responsive-flex-item h1 {
+    font-size: calc(1rem + 1vw);
+}
  .blue {
     color: #7DDAFF;
  }
@@ -39,9 +51,19 @@ body::before {
     font-size: clamp(1vw, 2vw, 1.5vw);
  }
 
- .inline-content {
-    display: flex;
-    align-items: center;
+.timer-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    
+}
+
+.timer {
+    width: 100%;
+    
+    height: 100px;
+    
+    text-align: center;
 }
 
 
