@@ -2,9 +2,6 @@
 // From where I got some inspiration, the code exposed there serves a different purpose, but it helped me to better structure the idea
 // Referenced: https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API
 
-
-
-
 // Fist I'll need to display the countdown to an element on the page
 // <p id="countdown"></p>
 

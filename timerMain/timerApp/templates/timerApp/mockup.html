@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TLA Timer </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head> 
+<body>
+ <div class="container d-flex flex-column">
+        <div class="d-flex flex-column justify-content-center align-items-center my-3 flex-grow-1"
+            style="background-color: #77B1C0; border-radius: .5vw;">
+            <h1 class="text-dark"> Try Timer Look Away! </h1>
+            <h3 class="text-secondary"> Trial page </h3>
+        </div>
+    
+        <div class="d-flex flex-column justify-content-evenly mt-2 p-3"
+            style="background-color: #638598; border-radius: .5vw;">
+            <div class="d-flex justify-content-center align-items-center mx-3 mb-3 "
+                style="background-color: #A7D8E2; border-radius: .5vw;">
+                <h1 class="text-dark" id="countdown"> TIMER LOOK AWAY! </h1>
+            </div>
+
+            <div class="d-flex flex-row justify-content-center align-items-center mx-3 mb-3"
+                style="background-color: #1D4461; border-radius: .5vw;">
+                <div class="d-flex flex-row justify-content-center my-2">
+                    <input type="submit" class="btn btn-light" id="startButton" value="Start">
+                    <input type="submit" class="btn btn-secondary ms-1" id="stopButton" value="Stop">
+                    <input type="submit" class="btn btn-warning ms-1" id="pauseButton" value="Pause">
+                    <input type="submit" class="btn btn-info me-5 ms-1" id="resumeButton" value="Resume">
+                    <input type="submit" onclick="alert('Once you sign up you will be able to delete your own timers!')" class="btn btn-danger" value="Delete">
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</body>
+
+
+<script> 
+// Convert input interval from seconds to miliseconds
+let inputInterval = 1200 * 1000;
+let inputIntervalBackup = inputInterval;
+// Mutuable variable to store the countdown timer
+let countDownTimer;
+
+// Variable to check if the countdown is paused and save current input interval to be used when the countdown is resumed
+let isPaused = false;
+let pausedInputInterval;
+
+// By reading the Utteresance API documentation I found it plays an average of 150 words per minute, test based on that
+// Set the message 
+let message = "Hey hey!! Josue! Josue! Its time to look away! Rest your eyes for at least 30 seconds! Never give up youre doing great! Keep on the good work"
+// Calculate the number of words in the message
+let numWords = message.split(" ").length;
+// Make an estimation of the duration of the speech in miliseconds
+let messageDuration = (numWords / 150) * 60 * 1000;
+
+// Function to start or restart the countdown
+function startCountdown() {
+
+    // Clear any existing interval
+    if (countDownTimer) {
+        clearInterval(countDownTimer);
+    }
+
+    // Reset the isPaused variable
+    isPaused = false;
+
+    // Update the count down every 1 second
+    countDownTimer = setInterval(function () {
+
+        // Calculate time for minutes and seconds and convert to miliseconds
+        let minutes = Math.floor((inputInterval % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((inputInterval % (1000 * 60)) / 1000);
+
+        // Decrease the input interval every 1 second
+        inputInterval -= 1000;
+
+        // Display the result in the element with id="countdown" as an example
+        document.getElementById("countdown").innerHTML = minutes + "m " + seconds + "s ";
+
+        // If the count down is finished, play the TTs message and restart the countdown
+        if (inputInterval < 0) {
+
+            // Stop the countdown timer so the message can be played
+            clearInterval(countDownTimer);
+
+            // Play the TTs message
+            playMessage(message);
+
+            // Display the message while the message is being played instead of the countdown
+            document.getElementById("countdown").innerHTML = message;
+
+            // Show and hide the message during the estimated duration
+            setTimeout(() => {
+                // Restart the countdown after the message has been hidden
+                inputInterval = inputIntervalBackup * 1000;
+                startCountdown();
+            }, messageDuration);
+        }
+    }, 1000);
+}
+
+// Fuction to play the TTs message
+function playMessage(message) {
+    let utterance = new SpeechSynthesisUtterance(message);
+    speechSynthesis.speak(utterance);
+
+    document.getElementById("countdown").innerHTML = message;
+}
+
+// Function to stop the countdown
+function stopCountdown() {
+    clearInterval(countDownTimer);
+    // Reset the input interval
+    inputInterval = inputIntervalBackup;
+
+}
+
+// Function to pause the countdown
+function pauseCountdown() {
+    if (!isPaused) {
+        clearInterval(countDownTimer);
+        isPaused = true;
+        // Save current input interval to be used when the countdown is resumed
+        pausedInputInterval = inputInterval;
+    }
+}
+
+// Function to resume the countdown
+function resumeCountdown() {
+    // isPaused will be set to false in the startCountdown function
+    if (isPaused) {
+        // Restore the input interval to the paused value
+        inputInterval = pausedInputInterval;
+
+        // Restart the countdown
+        startCountdown();
+    }
+}
+
+// Set event listeners for start and stop buttons # Done!
+document.getElementById("startButton").addEventListener("click", startCountdown);
+document.getElementById("stopButton").addEventListener("click", stopCountdown);
+document.getElementById("pauseButton").addEventListener("click", pauseCountdown);
+document.getElementById("resumeButton").addEventListener("click", resumeCountdown);
+</script>
+ <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+</html>
